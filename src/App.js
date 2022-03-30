@@ -6,12 +6,24 @@ class App extends React.Component {
     state = { advice: '' }
 
     componentDidMount() {
-        console.log('component did mount')
+        this.fetchAdvice()
+    }
+
+    fetchAdvice = () => {
+        axios.get('https://api.adviceslip.com/advice')
+        .then((response) => {
+            this.setState({ advice: response.data.slip.advice})
+        })
+        .catch((error) => {
+            console.log(error)
+        })
     }
 
     render() {
+        const { advice } = this.state
+
         return (
-            <h1>APP</h1>
+            <h1>{advice}</h1>
         )
     }
 }
